@@ -1,0 +1,23 @@
+{
+  "name": "SCTool",
+  "version": "1.0.0",
+  "description": "Does stuff",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron -r babel-register ."
+  },
+  "dependencies": {
+    "babel-preset-es2015": "^6.3.13",
+    "babel-preset-react": "^6.3.13",
+    "babel-register": "^6.3.13",
+    "electron": "~1.7.8",
+    "axios": "^0.16.2",
+    "lodash": "^4.17.4",
+    "node-persist": "^2.1.0",
+    "react": "^15.3.2",
+    "react-dom": "^15.3.2",
+    "bootstrap": "^3.3.7",
+    "react-bootstrap": "^0.31.5",
+    "react-spin": "^0.6.2"
+  }
+}
