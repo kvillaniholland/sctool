@@ -2,22 +2,37 @@
   "name": "SCTool",
   "version": "1.0.0",
   "description": "Does stuff",
+  "author": "Keenan Villani-Holland <kvillaniholland@gmail.com>",
+  "license": "GPL-3.0-or-later",
   "main": "main.js",
   "scripts": {
-    "start": "electron -r babel-register ."
+    "start": "electron -r babel-register .",
+    "test": "nyc ava && nyc report --reporter=text-lcov | coveralls && standard"
+  },
+  "ava": {
+    "require": [
+      "esm"
+    ]
   },
   "dependencies": {
+    "axios": "^0.16.2",
     "babel-preset-es2015": "^6.3.13",
     "babel-preset-react": "^6.3.13",
     "babel-register": "^6.3.13",
+    "bootstrap": "^3.3.7",
+    "dotenv": "^6.0.0",
     "electron": "~1.8.2-beta5",
-    "axios": "^0.16.2",
     "lodash": "^4.17.4",
     "node-persist": "^2.1.0",
     "react": "^15.3.2",
-    "react-dom": "^15.3.2",
-    "bootstrap": "^3.3.7",
     "react-bootstrap": "^0.31.5",
+    "react-dom": "^15.3.2",
     "react-spin": "^0.6.2"
+  },
+  "devDependencies": {
+    "ava": "^0.25.0",
+    "coveralls": "^3.0.2",
+    "nyc": "^13.0.1",
+    "standard": "^12.0.1"
   }
 }
