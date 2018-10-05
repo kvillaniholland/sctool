@@ -3,6 +3,7 @@ import electron from 'electron'
 const app = electron.app
 const BrowserWindow = electron.BrowserWindow
 
+require('dotenv').config()
 const path = require('path')
 const url = require('url')
 
@@ -18,7 +19,7 @@ async function createWindow () {
   }))
 
   // Open the DevTools.
-  mainWindow.webContents.openDevTools()
+  process.env.ENVIRONMENT === 'dev' && mainWindow.webContents.openDevTools()
 
   mainWindow.on('closed', function () {
     mainWindow = null
@@ -26,15 +27,5 @@ async function createWindow () {
 }
 
 app.on('ready', createWindow)
-
-app.on('window-all-closed', function () {
-  if (process.platform !== 'darwin') {
-    app.quit()
-  }
-})
-
-app.on('activate', function () {
-  if (mainWindow === null) {
-    createWindow()
-  }
-})
+app.on('window-all-closed', () => process.platform !== 'darwin' && app.quit())
+app.on('activate', () => mainWindow === null && createWindow())

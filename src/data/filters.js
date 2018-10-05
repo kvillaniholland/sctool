@@ -1,37 +1,24 @@
 import { flow } from 'lodash/fp'
 import { map } from 'lodash'
 
-const allFilters = {
+export const filterUsers = (source, compare, filters) => {
+  const filterFns = map(filters, (enabled, name) => enabled ? allFilters[name].bind(null, compare) : source => source)
+  return flow(...filterFns)(source)
+}
+
+export const minimumFollowerCount = (min, source = []) => source.filter(user => user.follower_count >= min)
+
+export const maximumFollowerCount = (max, source = []) => source.filter(user => user.follower_count <= max)
+
+export const mutual = (compare, source = []) => source.filter(user => !!findUserById(user.id, compare))
+
+export const nonMutual = (compare, source = []) => source.filter(user => !findUserById(user.id, compare))
+
+export const findUserById = (id, users) => users.find(user => user.id === id)
+
+export const allFilters = {
   mutual,
   nonMutual,
   minimumFollowerCount,
   maximumFollowerCount
-}
-
-export function filterUsers (source, filters) {
-  return flow(...map(filters, (value, key) => allFilters[key].bind(null, value)))(source)
-}
-
-export function filterFollowings (followings, filters) {
-
-}
-
-function minimumFollowerCount (min, source = []) {
-  return source.filter(user => user.follower_count >= min)
-}
-
-function maximumFollowerCount (max, source = []) {
-  return source.filter(user => user.follower_count <= max)
-}
-
-function mutual (compare, source = []) {
-  return source.filter(user => !!findUserById(user.id, compare))
-}
-
-function nonMutual (compare, source = []) {
-  return source.filter(user => !findUserById(user.id, compare))
-}
-
-function findUserById (id, users) {
-  return users.find(user => user.id === id)
 }

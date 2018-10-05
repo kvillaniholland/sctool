@@ -1,39 +1,33 @@
 import axios from 'axios'
+import {throwAuthError, throwHttpError} from '../Errors'
 
-export async function fetchFollowers (userId = process.env.USERID) {
-  let followers = []
-  let url = `https://api-v2.soundcloud.com/users/${userId}/followers?offset=0&limit=100`
+const apiBase = 'https://api-v2.soundcloud.com'
+const usersPath = '/users'
+const followersPath = '/followers'
+const followingsPath = '/followings'
 
+const followersUrl = userId => `${apiBase}${usersPath}/${userId}${followersPath}?offset=0&limit=100`
+const followingsUrl = userId => `${apiBase}${usersPath}/${userId}${followingsPath}?offset=0&limit=100`
+
+// LATER - Can be more functional?
+const loopFetch = async (url) => {
+  let result = []
   while (url) {
     const response = await basicApiRequest(url)
-    followers = followers.concat(response.data.collection)
+    result = result.concat(response.data.collection)
     url = response.data.next_href
   }
-  return followers
+  return result
 }
 
-export async function fetchFollowings (userId = process.env.USERID) {
-  let followings = []
-  let url = `https://api-v2.soundcloud.com/users/${userId}/followings?offset=0&limit=100`
+export const fetchFollowers = async (userId = process.env.USERID) => await loopFetch(followersUrl(userId))
 
-  while (url) {
-    const response = await basicApiRequest(url)
-    followings = followings.concat(response.data.collection)
-    url = response.data.next_href
-  }
-  return followings
-}
+export const fetchFollowings = async (userId = process.env.USERID) => await loopFetch(followingsUrl(userId))
 
 async function basicApiRequest (url, auth = process.env.AUTH) {
   return axios({
     method: 'get',
     url,
     headers: { 'Authorization': `OAuth ${auth}` }
-  }).catch(err => {
-    if (err.response.status === 401) {
-      throw new Error("SoundCloud authentication failed. Have you set up your auth token?") //TODO - store this string literal somewhere else
-    } else {
-      throw new Error(`An unexpected error ocurred while fetching data from SoundCloud: ${err.response.status} ${err.response.statusText}`)
-    }
-  })
+  }).catch(({response}) => response.status === 401 ? throwAuthError() : throwHttpError(response))
 }

@@ -1,52 +1,22 @@
 import nodeStorage from 'node-persist'
+import {removeAt, last} from 'fandy'
 
 nodeStorage.initSync()
 
-export function saveCurrentFollowers (followers) {
-  const allFollowers = getFollowers() || [[], []]
-  if (allFollowers.length > 1) {
-    allFollowers.shift()
-  }
-  allFollowers.push(followers)
-  nodeStorage.setItemSync(`followers`, allFollowers)
-}
+export const saveCurrentFollowers = (followers) => nodeStorage.setItemSync('followers', [...getFollowers(), followers])
 
-export function saveCurrentFollowings (followings) {
-  const allFollowings = getFollowings() || [[], []]
-  if (allFollowings.length > 1) {
-    allFollowings.shift()
-  }
-  allFollowings.push(followings)
-  nodeStorage.setItemSync(`followings`, allFollowings)
-}
+export const saveCurrentFollowings = (followings) => nodeStorage.setItemSync('followings', [...getFollowings(), followings])
 
-export function getCurrentFollowers () {
-  return getFollowers().pop()
-}
+export const getCurrentFollowers = () => last(getFollowers()) || []
 
-export function getCurrentFollowings () {
-  return getFollowings().pop()
-}
+export const getCurrentFollowings = () => last(getFollowings()) || []
 
-export function getFollowers () {
-  return nodeStorage.getItemSync('followers') || []
-}
+export const getFollowers = () => nodeStorage.getItemSync('followers') || []
 
-export function getFollowings () {
-  return nodeStorage.getItemSync('followings') || []
-}
+export const getFollowings = () => nodeStorage.getItemSync('followings') || []
 
-export function getNotifications () {
-  return nodeStorage.getItemSync('notifications') || []
-}
+export const getNotifications = () => nodeStorage.getItemSync('notifications') || []
 
-export function deleteNotification (index) {
-  const notifications = getNotifications()
-  notifications.splice(index, 1)
-  return nodeStorage.setItemSync('notifications', notifications)
-}
+export const deleteNotification = (index) => nodeStorage.setItemSync('notifications', removeAt(getNotifications(), index))
 
-export function saveNotification (notification) {
-  const notifications = getNotifications()
-  nodeStorage.setItemSync(`notifications`, [...notifications, notification])
-}
+export const saveNotification = (notification) => nodeStorage.setItemSync('notifications', [...getNotifications(), notification])
