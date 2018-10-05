@@ -1,8 +1,8 @@
 import React from 'react'
 import { Row, Col, Nav, Tab, NavItem } from 'react-bootstrap'
-import NotificationTable from '../../Notifications/NotificationTable'
-import FollowerTable from '../../Followers/FollowerTable'
-import FollowingTable from '../../Followings/FollowingTable'
+import NotificationTable from './NotificationTable'
+import FollowerTable from './FollowerTable'
+import FollowingTable from './FollowingTable'
 
 export default ({ filteredFollowers, filteredFollowings, followers, followings, notifications, refreshData }) => (
   <Tab.Container id='main-tabs' defaultActiveKey='notifications'>

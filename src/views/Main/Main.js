@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
 import { Grid } from 'react-bootstrap'
-import Spinner from '../components/Spinner'
-import ErrorAlert from '../components/ErrorAlert'
-import { sync } from '../data/followers'
-import { getCurrentFollowers, getCurrentFollowings, getNotifications } from '../data/storage'
-import { filterUsers } from '../data/filters'
-import Header from '../Header'
-import Filters from '../Filters'
-import Tabs from '../Tabs'
+import Spinner from '../../components/Spinner'
+import ErrorAlert from '../../components/ErrorAlert'
+import { sync } from '../../data/followers'
+import { getCurrentFollowers, getCurrentFollowings, getNotifications } from '../../data/storage'
+import { filterUsers } from '../../data/filters'
+import Header from './Header'
+import Filters from './Filters'
+import Tabs from './Tabs'
 
 // LATER - move all these actions out of the component maybe
 export default class Main extends Component {

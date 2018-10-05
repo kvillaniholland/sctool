@@ -1,7 +1,7 @@
 import React from 'react'
 import { Button, Glyphicon } from 'react-bootstrap'
-import Table from '../components/Table'
-import { clearNotification } from '../data/notifications'
+import Table from '../../components/Table'
+import { clearNotification } from '../../data/notifications'
 
 const NotificationRow = ({ index, onRefresh, notification }) => (
   <tr>
