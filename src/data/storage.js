@@ -1,5 +1,5 @@
 import nodeStorage from 'node-persist'
-import {removeAt, last} from 'fandy'
+import { removeAt, last } from 'fandy'
 
 nodeStorage.initSync()
 

@@ -1,5 +1,5 @@
 import _ from 'lodash'
-import {last} from 'fandy'
+import { last } from 'fandy'
 import { fetchFollowers, fetchFollowings } from './http'
 import { saveCurrentFollowers, saveCurrentFollowings, getFollowers } from './storage'
 import { saveFollowerNotification, saveUnfollowerNotification } from './notifications'

@@ -1,5 +1,5 @@
 import axios from 'axios'
-import {throwAuthError, throwHttpError} from '../Errors'
+import { throwAuthError, throwHttpError } from '../Errors'
 
 const apiBase = 'https://api-v2.soundcloud.com'
 const usersPath = '/users'
@@ -20,14 +20,14 @@ const loopFetch = async (url) => {
   return result
 }
 
-export const fetchFollowers = async (userId = process.env.USERID) => await loopFetch(followersUrl(userId))
+export const fetchFollowers = async (userId = process.env.USERID) => loopFetch(followersUrl(userId))
 
-export const fetchFollowings = async (userId = process.env.USERID) => await loopFetch(followingsUrl(userId))
+export const fetchFollowings = async (userId = process.env.USERID) => loopFetch(followingsUrl(userId))
 
 async function basicApiRequest (url, auth = process.env.AUTH) {
   return axios({
     method: 'get',
     url,
     headers: { 'Authorization': `OAuth ${auth}` }
-  }).catch(({response}) => response.status === 401 ? throwAuthError() : throwHttpError(response))
+  }).catch(({ response }) => response.status === 401 ? throwAuthError() : throwHttpError(response))
 }
